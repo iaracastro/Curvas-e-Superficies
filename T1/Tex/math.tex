@@ -1,0 +1,30 @@
+\noindent A curva offset \cite{marsh2005applied} é representada pela a seguinte expressão:
+$$O_d(t) = C(t) + d * n(t)$$
+
+\noindent $\bullet$ $O_d(t)$ é a curva offset resultante, que está a uma distância $d$ da curva original $C(t)$.
+
+\noindent $\bullet$ $C(t)$ é a curva original em sua forma parametrizada, que define a forma do objeto que se deseja fabricar.
+
+\noindent $\bullet$ $d$ é a distância fixa entre a curva original e a curva offset. Por exemplo, em um processo de usinagem, essa distância pode ser determinada pelo diâmetro da ferramenta de corte usada para cortar ao longo da curva original.
+
+\noindent $\bullet$ $n(t)$ é o vetor normal unitário à curva original $C(t)$ na posição t. Este vetor é perpendicular à curva e indica a direção para a qual a curva se afasta da curva original. Multiplicando por d, obtemos um vetor que indica a direção e a magnitude da distância entre as duas curvas para cada valor de $t$.
+
+\subsection*{Curvas Offset x Curvas Paralelas}
+Até aqui, deve ter surgido o questionamento de uma curva offset ser ou não o mesmo que uma curva paralela. Pode-se dizer que a curva offset é um conceito mais específico da curva paralela pelo seu contexto em desenho assistido por computador (CAD), mas na prática, os termos "curvas offset" e "curvas paralelas" são usados de forma intercambiável,uma vez que o objetivo é criar uma geometria que seja paralela a uma forma dada a uma distância fixa.
+
+\subsection*{Singularidades de Curvas Offset}
+\noindent Existem dois tipos de singularidades nas curvas offset: pontos irregulares e auto-interseções.
+
+\subsubsection*{Pontos irregulares}
+\noindent $\bullet$ Pontos isolados: Este ponto ocorre quando a curva progenitora com raio $R$ é um círculo e o deslocamento é $d=-R$. 
+% isso poderia acontecer por exemplo em uma curva não regular, já que a presença de cusps na curva original pode acarretar na presença de cusps na curva offset
+
+\noindent $\bullet$ Cusps \cite{farouki1990analytic}: Este ponto ocorre em um ponto $t$ onde o vetor tangente desaparece, ou seja, a curvatura $\kappa(t)$ da curva é:
+$$
+\kappa(t)=-\frac{1}{d}
+$$
+
+\subsubsection*{Auto-interseções}
+ As auto-interseções ocorrem se a distância da curva original exceder o raio de curvatura mínimo (curvatura) da curva que está sendo compensada. Por exemplo, se uma curva tiver um raio de 5 cm e você tentar compensar mais de 5 cm para dentro, a curva offset se cruzará e criará um loop. 
+
+Na usinagem, o raio do cortador não deve exceder o menor raio principal côncavo de curvatura da superfície para evitar goivagem local. Como a densidade dos caminhos da ferramenta é alta, a eficiência diminuirá significativamente. \\

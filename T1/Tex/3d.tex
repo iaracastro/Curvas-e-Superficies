@@ -1,0 +1,39 @@
+A situação das curvas offset pode ser generalizada pro plano 3d. É possível mover a curva ao longo do vetor normal, mas também ao longo do vetor binormal para obter uma "curva binomial paralela", representada pela expressão:
+$$C_d(t) = C(t) + d*B(t)$$
+
+\noindent Podemos criar a curva offset normal e binormal de uma curva 3D através da função abaixo:
+
+\begin{lstlisting}[language=Python]    
+def normal_binormal_offsets(C, d, t_range):
+    Ta = diff(alpha, t) / norm(diff(alpha, t))
+    Na = diff(Ta, t) / norm(diff(Ta, t))
+    Ba = Ta.cross_product(Na)
+    
+    # Principal Parallel Curve
+    Alpha_N = alpha + d*Na
+
+    # Binormal Parallel Curve
+    Alpha_B = alpha + d*Ba
+    
+    #Plots 3d
+    figures = []
+    figures.append(parametric_plot(alpha, (t, -2*pi, 2*pi), color='blue'))
+    figures.append(parametric_plot(Alpha_N, (t, -2*pi, 2*pi), color='black'))
+    figures.append(parametric_plot(Alpha_B, (t, -2*pi, 2*pi), color='red'))
+    
+    show(sum(figures),frame=False)
+\end{lstlisting}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{img/normal-binormal-3d.png}
+    \caption{Exemplo $C = ((4/5)*cos(t), 1-sin(t), (-3/5)*cos(t))$}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6cm]{img/normal-binormal-3d-2.png}
+    \caption{Exemplo $C = (3*cos(2t), 3*sin(2t),t)$}
+\end{figure}
+
+
+Para mais detalhes \cite{knuthwebsite}.

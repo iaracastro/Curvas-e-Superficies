@@ -1,0 +1,94 @@
+\documentclass[a4paper,20pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[bottom=1in,top=0.8in]{geometry}
+\usepackage{natbib}
+\usepackage{natbib}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{cancel}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{animate}
+\usepackage{mathtools}
+\usepackage[portuguese]{babel}
+\usepackage{comment}
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+
+%\title{Trabalho de Curvas e Superfícies - A1}
+%\author{Iara Cristina e Janaina Neres}
+\date{\today}
+
+\begin{document}
+\thispagestyle{empty} 
+	
+\begin{tabular*}{0.95\textwidth}{l @{\extracolsep{\fill}} r} 
+    {\large \bf Curvas e Superfícies} &  \\
+	Escola de Matemática Aplicada, Fundação Getulio Vargas &  \\
+	Professora: Asla Medeiros de Sá &  {\today}\\
+		\hline 
+\end{tabular*}
+
+\vspace*{0.3cm} 
+\begin{center}
+		{\Large \bf Trabalho A1:  Curvas Offset}\\[5mm]
+{\large Iara Cristina e Janaina Neres} \\[5mm]
+		%\vspace{2mm}
+	\end{center}  
+
+
+
+\section*{Introdução}
+\input{intro}
+
+\section*{O que é uma curva offset?}
+\input{math}
+
+\section*{Exemplos}
+\input{example}
+
+\section*{NC Machining \& Ball-End Cutter}
+\input{ball-end}
+
+\section*{Curvas Offset em Funções Implícitas?}
+\input{implicit}
+
+\section*{Curvas 3D}
+\input{3d}
+
+\section*{Exercícios}
+\input{exercises}
+
+\newpage
+\bibliographystyle{plain}
+\bibliography{bibliography.bib}
+
+
+
+\end{document}

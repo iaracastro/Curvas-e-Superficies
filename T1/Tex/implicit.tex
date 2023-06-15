@@ -1,0 +1,21 @@
+Após investigar sobre o caso de curvas offset em funções implícitas, concluímos que geralmente a representação analítica de uma curva paralela de uma curva implícita não é possível. Mas existe uma forma de representar a distância orientada analiticamente. Para isso calculamos:
+
+\noindent $\bullet$ Grad: O gradiente da função C.\\
+\noindent $\bullet$ n: O gradiente da função C normalizado.\\
+\noindent $\bullet$ N(x,y): Produto de cada componente de Grad com seu respectivo componente em n. \\
+\noindent $\bullet$ Offset: Curva offset representada por $O(x,y) = C(x,y) + d*N(x,y)$
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{img/implicit1.png}
+    \caption{$F(x,y) = sen^4(x) + cos^4(y) - 1$}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{img/implicit2.png}
+    \caption{$F(x,y) = sen(x)^2 + cos(x)^2 - 1$}
+  \end{minipage}
+\end{figure}
+
+Apesar de obter os resultados desejados, não foi possível restringir a distância $d$ como gostaríamos, e nem sempre obteremos curvas paralelas.
+Para mais detalhes \cite{enwiki:1124144545}.

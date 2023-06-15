@@ -1,0 +1,95 @@
+Os exercícios resolvidos são propostos na página 108 do livro \cite{hartmann2003geometry} "Applied Geometry for Computer Graphics and CAD" do Duncan Marsh.
+
+Começamos criando duas funções, a primeira retorna a equação da curva offset, a partir da curva original e o valor "d", enquanto a segunda gera os plots de múltiplas curvas offsets para vários valores de $d$.
+
+\begin{lstlisting}[language=Python]
+def get_offset_curve(alpha, d):
+    #---- INPUT ------
+    # alpha: curva
+    # d: distancia entre a curva original e offset
+    #-----------------
+    C(t) = alpha
+    C_d(t) = diff(C(t), t)
+    v_n(t) = (- C_d(t)[1], C_d(t)[0]) # vetor normal 
+    n(t) = v_n(t) / v_n(t).norm() # vetor normal unitario
+    offset = C(t) + d*n(t) # aplica a formula da curva offset
+    
+    return offset
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python]
+def plot_multiple_d(alpha, d, k, intervalo, size):   
+    figures = []
+    curve = figures.append(parametric_plot(alpha, (t, intervalo[0], intervalo[1]), figsize=size, color="blue"))
+    for i in range(1,k+1):
+        d_k = d*i
+        positive_offset = get_offset_curve(alpha, d_k)
+        negative_offset = get_offset_curve(alpha, -d_k)
+        
+        if k < 4:
+            figures.append(parametric_plot((positive_offset), (t, intervalo[0], intervalo[1]), figsize=size, color="green", legend_label=f"d ={float(str(d_k).rstrip('0').rstrip('.'))}"))   
+            figures.append(parametric_plot((negative_offset), (t, intervalo[0], intervalo[1]), figsize=size, color="red", legend_label=f"d ={float(str(-d_k).rstrip('0').rstrip('.'))}"))
+        else:
+            figures.append(parametric_plot((positive_offset), (t, intervalo[0], intervalo[1]), figsize=size, color="green"))   
+            figures.append(parametric_plot((negative_offset), (t, intervalo[0], intervalo[1]), figsize=size, color="red"))
+    return sum(figures)
+\end{lstlisting}
+
+\subsection*{Questões}
+\noindent 5.15. Determine a offset de $\mathbf{C}(t)=\left(1-3 t+3 t^2, 3 t^2-2 t^3\right)$ em uma distância d. Plote a curva e sua offcet em uma distância $d=1$.\\
+
+\noindent 5.16. Determine as offsets à uma distance $d$ para as seguintes curvas:\\
+(a) $(c \cosh (t / c), t)$\\
+(b) $\left(e^{b t} \cos t, e^{b t} \sin t\right)$.\\
+(c) $(\cos t+t \sin t, \sin t-t \cos t)$.\\
+
+
+\noindent 5.17. Mostre que a offset em uma distância $d$ de um círculo de raio $r$ é um círculo de raio $r+d$.
+
+\subsection*{Soluções}
+\subsubsection*{5.15}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=7cm]{img/5-15-1.1.png}
+    \caption{Exercício 5.15, d = 1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{img/5-15-1.2.png}
+    \caption{Exercício 5.15, outros valores de d}
+\end{figure}
+
+\subsubsection*{5.16, a)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=7cm]{img/5-16-a.png}
+    \caption{$C(t) = (c \cosh (t / c), t)$, $c = e$}
+\end{figure}
+
+\subsubsection*{b)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{img/5-16-b.png}
+    \caption{$C(t) = \left(e^{b t} \cos t, e^{b t} \sin t\right)$}
+\end{figure}
+
+\subsubsection*{c)}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{img/5-16-c.png}
+    \caption{$(\cos t+t \sin t, \sin t-t \cos t)$}
+\end{figure}
+
+\subsubsection*{5.17}
+Para provar que a offset em uma distância $d$ de um círculo de raio $r$ é um círculo de raio $r+d$, seja a parametrização de um círculo de raio $r$, $C(t) = (r*cos(t),r*sin(t))$, calculamos a expressão da curva offset e mostramos que é a parametrização de um círculo de raio $(r+d)$
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.6]{img/5-17-explanation.png}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.5]{img/5-17.png}
+    \caption{Exercício 5.17: para vários valores de d}
+\end{figure}

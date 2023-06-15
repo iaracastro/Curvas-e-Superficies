@@ -1,0 +1,40 @@
+Para uma primeira impressão, vamos ilustrar como as curvas offset se comportam para alguns exemplos em diferentes parâmetros e intervalos.\\
+
+\noindent $\bullet$ Parábola
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{img/example.png}
+    \caption{Exemplo de Curvas offset para $C(t) = (t,t^2)$}
+\end{figure}
+
+\noindent Para $d = -1$, ocorre uma \textbf{auto-interseção}.\\
+
+\noindent $\bullet$ Involutas\\
+A involuta de uma curva pode ser definida como a trajetória de um ponto que está preso em um fio que é enrolado na curva original. Visto isso, podemos representar a involuta como uma função de arco $s$ e um parâmetro $a$ que representa a distância do ponto inicial no fio à curva original: $\vec{C}_a(s) = \vec{c}(s) - \vec{c}'(s)(s-a)$, temos que $\vec{C}'_a(s) \cdot \vec{c}'(s) = 0$. Então as involutas são curvas paralelas, devido a $\vec{C}_a(s)=\vec{C}_0(s)+a \vec{c}'(s)$, onde $a$ é a distância e $\vec{c}'(s)$ é $N(t)$ em $\vec{C}_0(s)$.  
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/involutes1.png}
+    \caption{10 involutas para $C(t) = (sen(t),cos(t))$}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/involutes2.png}
+    \caption{100 involutas para $C(t) = (sen(t),cos(t))$}
+  \end{minipage}
+\end{figure}
+
+\noindent $\bullet$ Evolutas\\
+A definição de Evolutas é o lugar geométrico de todos os seus centros de curvatura. Uma definição alternativa é tratar a evoluta de $C$ como o lugar geométrico das "cusps" das suas curvas paralelas.
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/evolutes1.png}
+    \caption{$C(t) = (t,sin(t))$ e offsets}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/evolutes2.png}
+    \caption{Sobreposição de $C(t) = (t,sin(t))$ e offsets com suas Evolutas}
+  \end{minipage}
+\end{figure}
