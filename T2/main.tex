@@ -38,110 +38,137 @@ paper=a4
 
 
 
-\section*{Introdução}
-Para este trabalho, escolhemos criar um caderno de estudo sobre Superfícies, bem como suas aplicações computacionais. Por meio do Sagemath, seremos capazes de compreender e visualizar as propriedades dessas estruturas matemáticas de forma interativa e prática. Apresentaremos uma variedade de exemplos e exercícios que permitirão aprofundar nosso conhecimento e fortalecer nossa compreensão sobre o assunto.
-
-\section*{Superfícies}
-Uma superfície é geralmente representada por um conjunto de equações (ou parametrizações) que descrevem as coordenadas dos pontos na superfície em termos de parâmetros livres. Essas equações ou parametrizações podem ser utilizadas para calcular as derivadas parciais, vetores normais e outras propriedades geométricas. Alguns exemplos conhecidos são: a esfera, o cilindro, o plano, o cone e o toro.
-
-\begin{lstlisting}
-u, v = var('u v')
-Toro(u,v) = [(4+(3+cos(v))*sin(u)), (4+(3+cos(v))*cos(u)), (4+sin(v))] # Figura 1
-X = parametric_plot3d(Toro, (u, 0, 2*pi), (v, 0, 2*pi), color='yellow')
-
-# S = x^2 + y^2 + z == 0 # Figura 2
-# X = implicit_plot3d(S, (x,-2,2), (y,-2,2), (z,-2,0), color='lavenderblush')
-show(X)
-\end{lstlisting}
-
-\begin{figure}[H]
-  \centering
-  \begin{minipage}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{img/superficie1.png}
-    \caption{Toro Parametrizado}
-  \end{minipage}
-  \hspace{4mm}
-  \begin{minipage}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{img/superficie2.png}
-    \caption{$x^2 + y^2 + z = 0$}
-  \end{minipage}
-\end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section*{Derivadas Parciais}
-\cite{de2016introduccao} \textbf{Definição:} Em coordenadas cartesianas, uma parametrização local $X: U \rightarrow S$ se escreve como
-$$
-X(u, v)=(x(u, v), y(u, v), z(u, v)),(u, v) \in U,
-$$
-e suas derivadas parciais com respeito a $u$ e a $v$ denotam-se, respectivamente, por $X_u$ e $X_v$, isto é,
-$$X_u(u, v)=\left(\frac{\partial x}{\partial u}(u, v), \frac{\partial y}{\partial u}(u, v), \frac{\partial z}{\partial u}(u, v)\right)$$
-$$X_v(u, v)=\left(\frac{\partial x}{\partial v}(u, v), \frac{\partial y}{\partial v}(u, v), \frac{\partial z}{\partial v}(u, v)\right)$$
-
-\section*{Jacobiano}
-\textbf{Definição:} Matriz Jacobiana ou Jacobiano de $f: S \subseteq \mathbb{R}^n \rightarrow \mathbb{R}^m$ no ponto $x \in S$ é a matriz $m \times n$ dada por:
-$$
-J_f(x) = \left(\begin{array}{ccc}
-\frac{\partial f_1}{\partial x_1} & \ldots & \frac{\partial f_1}{\partial x_n} \\
-\vdots & \ddots & \vdots \\
-\frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
-\end{array}\right)
-$$
-No caso $X: S \subseteq \mathbb{R}^2 \rightarrow \mathbb{R}^3$ no ponto $p=X(q) \in S$, temos:
-
-$$dX_q = \left(\begin{array}{ll}
-\frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
-\frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} \\
-\frac{\partial z}{\partial u} & \frac{\partial z}{\partial v}
-\end{array}\right)$$
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Superfície Parametrizada
-Regular}
-
-Uma Superfície Parametrizada Regular é uma aplicação $X : U \subset \mathbb{R}^2 \rightarrow \mathbb{R}^3$, com $U$ aberto de $\mathbb{R}^2$, tal que:
-\begin{enumerate}
-\item $X$ é diferenciável de classe $C^\infty$;
-\item Para todo $q(u, v) \in U$, $dX_q : \mathbb{R}^2 \rightarrow \mathbb{R}^3$ é injetora.
-\end{enumerate}
-
-Obs: O item (2) da definição garante a existência de plano tangente $T_qS$ para todos os pontos $q = (u, v) \in U \subset R^2$. Temos que as superfícies parametrizadas regulares admitem auto-intersecção, isto é, não exigem a unicidade do plano tangente em cada ponto; o que não é o caso das superfícies regulares.\\
-
- \section*{Superfície Regular} 
- 
- \cite{do2016differential} \textbf{Definição:} Um subconjunto $S \subset \mathbb{R}^3$ é uma superfície regular se, para cada $p \in S$, existe uma vizinhança $V$ em $\mathbb{R}^3$ e um mapa $x: U \rightarrow V \cap S$ de um conjunto aberto $U \subset \mathbb{R}^2$ em $V \cap S \subset \mathbb{R}^3$ tal que:
-
-\begin{enumerate}
-
-\item  $\forall p \in S$, $\exists V \subseteq \mathbb{R}^3$ vizinhança de $p$ e uma aplicação $X: U \rightarrow V \cap S$ diferenciável, ou seja, é possível calcular derivadas parciais e definir vetores tangentes em cada ponto da superfície.
-
-\item  $X$ é um homeomorfismo entre $U$ e $V \cap S$, ou seja, $X$ possui uma inversa $X^{-1}: V \cap S \rightarrow U$ que é contínua.
-    
-    
-\item Para todo $p \in \mathbb{R}^2$, $dX_q$ é injetiva $\Leftrightarrow$  $X_u$ e $X_v$ LI $\Leftrightarrow X_u \times X_v \neq 0$
-\end{enumerate}
-Obs: O item (3) da definição garante a unicidade do plano tangente $T_qS$.
-\subsection*{Exemplo 1}
-
-A superfície dada por $X(u, v) = ((2\cos(u) - 1)\cos(u), (2\cos(u) - 1) \sin(u), v)$. È um exemplo de superfície parametrizada regular, mas,  não é superfície regular. 
-
-Temos que, $X$ é diferenciável de classe $C^\infty$ e $\frac{\partial X}{\partial u}(q) \times \frac{\partial X}{\partial v}(q) \neq (0, 0, 0), \forall q \in U$, garantindo a propriedade de injetividade do item 2. Porém, observa-se, que a superfície possue auto intersecção, não garantindo assim a unicidade do plano tangente em cada ponto de uma superfície regular. 
-
-\begin{figure}[H]
-  \centering
-  \begin{minipage}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{img/autointersecao1.png}
-    \caption{Dois planos tangentes}
-  \end{minipage}
-  \hspace{4mm}
-  \begin{minipage}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{img/autointersecao2.png}
-    \caption{Dois planos tangentes}
-  \end{minipage}
-\end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-\subsection*{Exemplo 2}
+  \section*{Introdução}
+  Para este trabalho, escolhemos criar um caderno de estudo sobre Superfícies, bem como suas aplicações computacionais. Por meio do Sagemath, seremos capazes de compreender e visualizar as propriedades dessas estruturas matemáticas de forma interativa e prática. Apresentaremos uma variedade de exemplos e exercícios que permitirão aprofundar nosso conhecimento e fortalecer nossa compreensão sobre o assunto.
+  
+  \section*{Superfícies}
+  Uma superfície é geralmente representada por um conjunto de equações (ou parametrizações) que descrevem as coordenadas dos pontos na superfície em termos de parâmetros livres. Essas equações ou parametrizações podem ser utilizadas para calcular as derivadas parciais, vetores normais e outras propriedades geométricas. Alguns exemplos conhecidos são: a esfera, o cilindro, o plano, o cone e o toro.
+  
+  \begin{lstlisting}
+  u, v = var('u v')
+  Toro(u,v) = [(4+(3+cos(v))*sin(u)), (4+(3+cos(v))*cos(u)), (4+sin(v))] # Figura 1
+  X = parametric_plot3d(Toro, (u, 0, 2*pi), (v, 0, 2*pi), color='yellow')
+  
+  # S = x^2 + y^2 + z == 0 # Figura 2
+  # X = implicit_plot3d(S, (x,-2,2), (y,-2,2), (z,-2,0), color='lavenderblush')
+  show(X)
+  \end{lstlisting}
+  
+  \begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.4\textwidth}
+      \includegraphics[width=\textwidth]{img/superficie1.png}
+      \caption{Toro Parametrizado}
+    \end{minipage}
+    \hspace{4mm}
+    \begin{minipage}[b]{0.4\textwidth}
+      \includegraphics[width=\textwidth]{img/superficie2.png}
+      \caption{$x^2 + y^2 + z = 0$}
+    \end{minipage}
+  \end{figure}
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+  \section*{Derivadas Parciais}
+  \cite{de2016introduccao} \textbf{Definição:} Em coordenadas cartesianas, uma parametrização local $X: U \rightarrow S$ se escreve como
+  $$
+  X(u, v)=(x(u, v), y(u, v), z(u, v)),(u, v) \in U,
+  $$
+  e suas derivadas parciais com respeito a $u$ e a $v$ denotam-se, respectivamente, por $X_u$ e $X_v$, isto é,
+  $$X_u(u, v)=\left(\frac{\partial x}{\partial u}(u, v), \frac{\partial y}{\partial u}(u, v), \frac{\partial z}{\partial u}(u, v)\right)$$
+  $$X_v(u, v)=\left(\frac{\partial x}{\partial v}(u, v), \frac{\partial y}{\partial v}(u, v), \frac{\partial z}{\partial v}(u, v)\right)$$
+  
+  \section*{Jacobiano}
+  \textbf{Definição:} Matriz Jacobiana ou Jacobiano de $f: S \subseteq \mathbb{R}^n \rightarrow \mathbb{R}^m$ no ponto $x \in S$ é a matriz $m \times n$ dada por:
+  $$
+  J_f(x) = \left(\begin{array}{ccc}
+  \frac{\partial f_1}{\partial x_1} & \ldots & \frac{\partial f_1}{\partial x_n} \\
+  \vdots & \ddots & \vdots \\
+  \frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
+  \end{array}\right)
+  $$
+  No caso $X: S \subseteq \mathbb{R}^2 \rightarrow \mathbb{R}^3$ no ponto $p=X(q) \in S$, temos que a matriz da aplicação linear $dX_q$ nas bases canônicas de $\mathbb{R}^2$ e $\mathbb{R}^3$ é:
+  
+  $$dX_q = \left(\begin{array}{ll}
+  \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
+  \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} \\
+  \frac{\partial z}{\partial u} & \frac{\partial z}{\partial v}
+  \end{array}\right)$$
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \section*{Superfície Parametrizada
+  Regular}
+  
+  \textbf{Definição:} É uma aplicação $X : U \subset \mathbb{R}^2 \rightarrow \mathbb{R}^3$, com $U$ aberto de $\mathbb{R}^2$, tal que:
+  \begin{enumerate}
+  \item $X$ é diferenciável de classe $C^\infty$;
+  \item Para todo $q(u, v) \in U$, $dX_q : \mathbb{R}^2 \rightarrow \mathbb{R}^3$ é injetora.
+  \end{enumerate}
+  
+  Obs: O item (2) da definição garante a existência de plano tangente $T_qS$ para todos os pontos $q = (u, v) \in U \subset R^2$. Temos que as superfícies parametrizadas regulares admitem auto-intersecção, isto é, não exigem a unicidade do plano tangente em cada ponto; o que não é o caso das superfícies regulares.\\
+  
+   \section*{Superfície Regular} 
+   
+   \cite{do2016differential} \textbf{Definição:} Um subconjunto $S \subset \mathbb{R}^3$ é uma superfície regular se, para cada $p \in S$, existe uma vizinhança $V$ em $\mathbb{R}^3$ e um mapa $x: U \rightarrow V \cap S$ de um conjunto aberto $U \subset \mathbb{R}^2$ em $V \cap S \subset \mathbb{R}^3$ tal que:
+  
+  \begin{enumerate}
+  
+  \item  $\forall p \in S$, $\exists V \subseteq \mathbb{R}^3$ vizinhança de $p$ e uma aplicação $X: U \rightarrow V \cap S$ diferenciável, ou seja, é possível calcular derivadas parciais e definir vetores tangentes em cada ponto da superfície.
+  
+  \item  $X$ é um homeomorfismo entre $U$ e $V \cap S$, ou seja, $X$ possui uma inversa $X^{-1}: V \cap S \rightarrow U$ que é contínua.
+      
+      
+  \item Para todo $p \in \mathbb{R}^2$, $dX_q$ é injetiva $\Leftrightarrow$ $dX_q$ tem posto 2 $\Leftrightarrow$ $X_u$ e $X_v$ LI $\Leftrightarrow X_u \times X_v \neq 0$
+  \end{enumerate}
+  Obs: O item (3) da definição garante a unicidade do plano tangente $T_qS$.
+  \subsection*{Exemplo 1}
+  
+  A superfície dada por $X(u, v) = ((2\cos(u) - 1)\cos(u), (2\cos(u) - 1) \sin(u), v)$. È um exemplo de superfície parametrizada regular, mas,  não é superfície regular. 
+  
+  Temos que, $X$ é diferenciável de classe $C^\infty$ e $\frac{\partial X}{\partial u}(q) \times \frac{\partial X}{\partial v}(q) \neq (0, 0, 0), \forall q \in U$, garantindo a propriedade de injetividade do item 2. Porém, observa-se, que a superfície possue auto intersecção, não garantindo assim a unicidade do plano tangente em cada ponto de uma superfície regular. 
+  
+  \begin{figure}[H]
+    \centering
+    \begin{minipage}[b]{0.4\textwidth}
+      \includegraphics[width=\textwidth]{img/autointersecao1.png}
+      \caption{Dois planos tangentes}
+    \end{minipage}
+    \hspace{4mm}
+    \begin{minipage}[b]{0.4\textwidth}
+      \includegraphics[width=\textwidth]{img/autointersecao2.png}
+      \caption{Dois planos tangentes}
+    \end{minipage}
+  \end{figure}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+  
+  \subsection*{Exemplo 2}
+   Mostre que, se $f(u, v)$ é uma função real diferenciável, onde $(u, v) \in U$, aberto de $\mathbb{R}^2$, então a aplicação $X(u, v) = (u, v, f(u, v))$ é uma superfície parametrizada regular, que descreve o gráfico da função f.
+  
+  Por definição, $$Graf(f) = \{(x,y,z) \in \mathbb{R}^3 | (x,y) \in U \; \text{e} \; z = f(x,y)\}$$
+  Então, seja $S = Graf(f)$, a aplicação $X:U \rightarrow S = S \cap \mathbb{R}^3$ dada por $X(u,v) = (u,v,f(u,v))$ é diferenciável pois $f(u,v)$ é uma função real diferenciável, cumprindo o item 1. Além disso, $X$ é uma bijeção e $X^{-1}=\left.\pi\right|_S$ é contínua, onde $\pi: \mathbb{R}^3 \longrightarrow \mathbb{R}^2, \pi(x, y, z)=(x, y)$, é a projeção sobre o plano-xy. Por último, $\mathrm{d} X_{(u, v)}: \mathbb{R}^2 \longrightarrow \mathbb{R}^3$ é injetora para todo $(u, v) \in \mathrm{U}$, pois
+  $$
+  \frac{\partial(x, y)}{\partial(u, v)}(u, v)=\left|\begin{array}{ll}
+  1 & 0 \\
+  0 & 1
+  \end{array}\right| \neq 0 .
+  $$
+  cumprindo o item 3. Logo, $S=\operatorname{Graf}(f)$ é uma superfície regular.
+  
+  
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  
+  \section*{Superfície de Revolução}
+  \cite{de2016introduccao} \textbf{Definição:} Geometricamente, uma superfície de revolução $S$ é obtida pela rotação de uma curva regular $C$ em torno de uma reta $l$, em que $C$ e $l$ são disjuntas e contidas em um plano $\Pi \subset \mathbb{R}^3$. A curva $C$ é chamada de \textbf{geratriz} de $S$.
+  
+  A parametrização geral de uma superfície de revolução é dada por:
+  $$
+  X(u, v) = (f(v) \cos u, f(v) \sin u, g(v))
+  $$
+  onde \(u\) é o ângulo de rotação em torno do eixo, \(v\) é o parâmetro ao longo da curva geratriz, e \((f(v), g(v))\) são as coordenadas da curva geratriz.
+  
+  Para $u$ fixo temos os chamados meridianos de $S$. \\
+  Para $v$ fixo temos os chamados paralelos de $S$, que são círculos, por construção.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
