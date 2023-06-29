@@ -5,14 +5,19 @@ paper=a4
 ,headings=big
 ,numbers=noendperiod % 2.3.1 vs 2.3.1. (no dot after the last chapter number)
 ,twoside=true
-,toc=bibliography % Bibliography appears in Table of Contents (without a number)
 ,toc=listof % List of Figures and List of Tables appear in Table of Contents
 ,version=last % Use latest version of the KOMA-Script
 ]%
 {scrbook}
+
 \input{packages.tex}
 
-\parskip=6pt 
+
+%\title{Trabalho de Curvas e Superfícies - A1}
+%\author{Iara Cristina e Janaina Neres}
+\date{\today}
+
+\parskip=3pt 
 \parindent=0pt
 
 %\title{Trabalho de Curvas e Superfícies - A1}
@@ -38,164 +43,231 @@ paper=a4
 
 
 
-  \section*{Introdução}
-  Para este trabalho, escolhemos criar um caderno de estudo sobre Superfícies, bem como suas aplicações computacionais. Por meio do Sagemath, seremos capazes de compreender e visualizar as propriedades dessas estruturas matemáticas de forma interativa e prática. Apresentaremos uma variedade de exemplos e exercícios que permitirão aprofundar nosso conhecimento e fortalecer nossa compreensão sobre o assunto.
-  
-  \section*{Superfícies}
-  Uma superfície é geralmente representada por um conjunto de equações (ou parametrizações) que descrevem as coordenadas dos pontos na superfície em termos de parâmetros livres. Essas equações ou parametrizações podem ser utilizadas para calcular as derivadas parciais, vetores normais e outras propriedades geométricas. Alguns exemplos conhecidos são: a esfera, o cilindro, o plano, o cone e o toro.
-  
-  \begin{lstlisting}
-  u, v = var('u v')
-  Toro(u,v) = [(4+(3+cos(v))*sin(u)), (4+(3+cos(v))*cos(u)), (4+sin(v))] # Figura 1
-  X = parametric_plot3d(Toro, (u, 0, 2*pi), (v, 0, 2*pi), color='yellow')
-  
-  # S = x^2 + y^2 + z == 0 # Figura 2
-  # X = implicit_plot3d(S, (x,-2,2), (y,-2,2), (z,-2,0), color='lavenderblush')
-  show(X)
-  \end{lstlisting}
-  
-  \begin{figure}[H]
-    \centering
-    \begin{minipage}[b]{0.4\textwidth}
-      \includegraphics[width=\textwidth]{img/superficie1.png}
-      \caption{Toro Parametrizado}
-    \end{minipage}
-    \hspace{4mm}
-    \begin{minipage}[b]{0.4\textwidth}
-      \includegraphics[width=\textwidth]{img/superficie2.png}
-      \caption{$x^2 + y^2 + z = 0$}
-    \end{minipage}
-  \end{figure}
-  
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
-  \section*{Derivadas Parciais}
-  \cite{de2016introduccao} \textbf{Definição:} Em coordenadas cartesianas, uma parametrização local $X: U \rightarrow S$ se escreve como
-  $$
-  X(u, v)=(x(u, v), y(u, v), z(u, v)),(u, v) \in U,
-  $$
-  e suas derivadas parciais com respeito a $u$ e a $v$ denotam-se, respectivamente, por $X_u$ e $X_v$, isto é,
-  $$X_u(u, v)=\left(\frac{\partial x}{\partial u}(u, v), \frac{\partial y}{\partial u}(u, v), \frac{\partial z}{\partial u}(u, v)\right)$$
-  $$X_v(u, v)=\left(\frac{\partial x}{\partial v}(u, v), \frac{\partial y}{\partial v}(u, v), \frac{\partial z}{\partial v}(u, v)\right)$$
-  
-  \section*{Jacobiano}
-  \textbf{Definição:} Matriz Jacobiana ou Jacobiano de $f: S \subseteq \mathbb{R}^n \rightarrow \mathbb{R}^m$ no ponto $x \in S$ é a matriz $m \times n$ dada por:
-  $$
-  J_f(x) = \left(\begin{array}{ccc}
-  \frac{\partial f_1}{\partial x_1} & \ldots & \frac{\partial f_1}{\partial x_n} \\
-  \vdots & \ddots & \vdots \\
-  \frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
-  \end{array}\right)
-  $$
-  No caso $X: S \subseteq \mathbb{R}^2 \rightarrow \mathbb{R}^3$ no ponto $p=X(q) \in S$, temos que a matriz da aplicação linear $dX_q$ nas bases canônicas de $\mathbb{R}^2$ e $\mathbb{R}^3$ é:
-  
-  $$dX_q = \left(\begin{array}{ll}
-  \frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
-  \frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} \\
-  \frac{\partial z}{\partial u} & \frac{\partial z}{\partial v}
-  \end{array}\right)$$
-  
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  \section*{Superfície Parametrizada
-  Regular}
-  
-  \textbf{Definição:} É uma aplicação $X : U \subset \mathbb{R}^2 \rightarrow \mathbb{R}^3$, com $U$ aberto de $\mathbb{R}^2$, tal que:
-  \begin{enumerate}
-  \item $X$ é diferenciável de classe $C^\infty$;
-  \item Para todo $q(u, v) \in U$, $dX_q : \mathbb{R}^2 \rightarrow \mathbb{R}^3$ é injetora.
-  \end{enumerate}
-  
-  Obs: O item (2) da definição garante a existência de plano tangente $T_qS$ para todos os pontos $q = (u, v) \in U \subset R^2$. Temos que as superfícies parametrizadas regulares admitem auto-intersecção, isto é, não exigem a unicidade do plano tangente em cada ponto; o que não é o caso das superfícies regulares.\\
-  
-   \section*{Superfície Regular} 
-   
-   \cite{do2016differential} \textbf{Definição:} Um subconjunto $S \subset \mathbb{R}^3$ é uma superfície regular se, para cada $p \in S$, existe uma vizinhança $V$ em $\mathbb{R}^3$ e um mapa $x: U \rightarrow V \cap S$ de um conjunto aberto $U \subset \mathbb{R}^2$ em $V \cap S \subset \mathbb{R}^3$ tal que:
-  
-  \begin{enumerate}
-  
-  \item  $\forall p \in S$, $\exists V \subseteq \mathbb{R}^3$ vizinhança de $p$ e uma aplicação $X: U \rightarrow V \cap S$ diferenciável, ou seja, é possível calcular derivadas parciais e definir vetores tangentes em cada ponto da superfície.
-  
-  \item  $X$ é um homeomorfismo entre $U$ e $V \cap S$, ou seja, $X$ possui uma inversa $X^{-1}: V \cap S \rightarrow U$ que é contínua.
-      
-      
-  \item Para todo $p \in \mathbb{R}^2$, $dX_q$ é injetiva $\Leftrightarrow$ $dX_q$ tem posto 2 $\Leftrightarrow$ $X_u$ e $X_v$ LI $\Leftrightarrow X_u \times X_v \neq 0$
-  \end{enumerate}
-  Obs: O item (3) da definição garante a unicidade do plano tangente $T_qS$.
-  \subsection*{Exemplo 1}
-  
-  A superfície dada por $X(u, v) = ((2\cos(u) - 1)\cos(u), (2\cos(u) - 1) \sin(u), v)$. È um exemplo de superfície parametrizada regular, mas,  não é superfície regular. 
-  
-  Temos que, $X$ é diferenciável de classe $C^\infty$ e $\frac{\partial X}{\partial u}(q) \times \frac{\partial X}{\partial v}(q) \neq (0, 0, 0), \forall q \in U$, garantindo a propriedade de injetividade do item 2. Porém, observa-se, que a superfície possue auto intersecção, não garantindo assim a unicidade do plano tangente em cada ponto de uma superfície regular. 
-  
-  \begin{figure}[H]
-    \centering
-    \begin{minipage}[b]{0.4\textwidth}
-      \includegraphics[width=\textwidth]{img/autointersecao1.png}
-      \caption{Dois planos tangentes}
-    \end{minipage}
-    \hspace{4mm}
-    \begin{minipage}[b]{0.4\textwidth}
-      \includegraphics[width=\textwidth]{img/autointersecao2.png}
-      \caption{Dois planos tangentes}
-    \end{minipage}
-  \end{figure}
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
-  
-  \subsection*{Exemplo 2}
-   Mostre que, se $f(u, v)$ é uma função real diferenciável, onde $(u, v) \in U$, aberto de $\mathbb{R}^2$, então a aplicação $X(u, v) = (u, v, f(u, v))$ é uma superfície parametrizada regular, que descreve o gráfico da função f.
-  
-  Por definição, $$Graf(f) = \{(x,y,z) \in \mathbb{R}^3 | (x,y) \in U \; \text{e} \; z = f(x,y)\}$$
-  Então, seja $S = Graf(f)$, a aplicação $X:U \rightarrow S = S \cap \mathbb{R}^3$ dada por $X(u,v) = (u,v,f(u,v))$ é diferenciável pois $f(u,v)$ é uma função real diferenciável, cumprindo o item 1. Além disso, $X$ é uma bijeção e $X^{-1}=\left.\pi\right|_S$ é contínua, onde $\pi: \mathbb{R}^3 \longrightarrow \mathbb{R}^2, \pi(x, y, z)=(x, y)$, é a projeção sobre o plano-xy. Por último, $\mathrm{d} X_{(u, v)}: \mathbb{R}^2 \longrightarrow \mathbb{R}^3$ é injetora para todo $(u, v) \in \mathrm{U}$, pois
-  $$
-  \frac{\partial(x, y)}{\partial(u, v)}(u, v)=\left|\begin{array}{ll}
-  1 & 0 \\
-  0 & 1
-  \end{array}\right| \neq 0 .
-  $$
-  cumprindo o item 3. Logo, $S=\operatorname{Graf}(f)$ é uma superfície regular.
-  
-  
-  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  
-  \section*{Superfície de Revolução}
-  \cite{de2016introduccao} \textbf{Definição:} Geometricamente, uma superfície de revolução $S$ é obtida pela rotação de uma curva regular $C$ em torno de uma reta $l$, em que $C$ e $l$ são disjuntas e contidas em um plano $\Pi \subset \mathbb{R}^3$. A curva $C$ é chamada de \textbf{geratriz} de $S$.
-  
-  A parametrização geral de uma superfície de revolução é dada por:
-  $$
-  X(u, v) = (f(v) \cos u, f(v) \sin u, g(v))
-  $$
-  onde \(u\) é o ângulo de rotação em torno do eixo, \(v\) é o parâmetro ao longo da curva geratriz, e \((f(v), g(v))\) são as coordenadas da curva geratriz.
-  
-  Para $u$ fixo temos os chamados meridianos de $S$. \\
-  Para $v$ fixo temos os chamados paralelos de $S$, que são círculos, por construção.
+\section*{Introdução}
+Para este trabalho, escolhemos criar um caderno de estudo sobre Superfícies, bem como suas aplicações computacionais. Por meio do Sagemath, seremos capazes de compreender e visualizar as propriedades dessas estruturas matemáticas de forma interativa e prática. Apresentaremos uma variedade de exemplos e exercícios que permitirão aprofundar nosso conhecimento e fortalecer nossa compreensão sobre o assunto.
 
+\section*{Superfícies}
+Uma superfície é geralmente representada por um conjunto de equações (ou parametrizações) que descrevem as coordenadas dos pontos na superfície em termos de parâmetros livres. Essas equações ou parametrizações podem ser utilizadas para calcular as derivadas parciais, vetores normais e outras propriedades geométricas. Alguns exemplos conhecidos são: a esfera, o cilindro, o plano, o cone e o toro.
+
+\begin{lstlisting}
+u, v = var('u v')
+Toro(u,v) = [(4+(3+cos(v))*sin(u)), (4+(3+cos(v))*cos(u)), (4+sin(v))] # Figura 1
+X = parametric_plot3d(Toro, (u, 0, 2*pi), (v, 0, 2*pi), color='yellow')
+
+# S = x^2 + y^2 + z == 0 # Figura 2
+# X = implicit_plot3d(S, (x,-2,2), (y,-2,2), (z,-2,0), color='lavenderblush')
+show(X)
+\end{lstlisting}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/superficie1.png}
+    \caption{Toro Parametrizado}
+  \end{minipage}
+  \hspace{4mm}
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/superficie2.png}
+    \caption{$x^2 + y^2 + z = 0$}
+  \end{minipage}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Derivadas Parciais}
+\cite{de2016introduccao} \textbf{Definição:} Em coordenadas cartesianas, uma parametrização local $X: U \rightarrow S$ se escreve como
+$$
+X(u, v)=(x(u, v), y(u, v), z(u, v)),(u, v) \in U,
+$$
+e suas derivadas parciais com respeito a $u$ e a $v$ denotam-se, respectivamente, por $X_u$ e $X_v$, isto é,
+$$X_u(u, v)=\left(\frac{\partial x}{\partial u}(u, v), \frac{\partial y}{\partial u}(u, v), \frac{\partial z}{\partial u}(u, v)\right)$$
+$$X_v(u, v)=\left(\frac{\partial x}{\partial v}(u, v), \frac{\partial y}{\partial v}(u, v), \frac{\partial z}{\partial v}(u, v)\right)$$
+
+\section*{Jacobiano}
+\textbf{Definição:} Matriz Jacobiana ou Jacobiano de $f: S \subseteq \mathbb{R}^n \rightarrow \mathbb{R}^m$ no ponto $x \in S$ é a matriz $m \times n$ dada por:
+$$
+J_f(x) = \left(\begin{array}{ccc}
+\frac{\partial f_1}{\partial x_1} & \ldots & \frac{\partial f_1}{\partial x_n} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
+\end{array}\right)
+$$
+No caso $X: S \subseteq \mathbb{R}^2 \rightarrow \mathbb{R}^3$ no ponto $p=X(q) \in S$, temos que a matriz da aplicação linear $dX_q$ nas bases canônicas de $\mathbb{R}^2$ e $\mathbb{R}^3$ é:
+
+$$dX_q = \left(\begin{array}{ll}
+\frac{\partial x}{\partial u} & \frac{\partial x}{\partial v} \\
+\frac{\partial y}{\partial u} & \frac{\partial y}{\partial v} \\
+\frac{\partial z}{\partial u} & \frac{\partial z}{\partial v}
+\end{array}\right)$$
+\subsubsection*{Exemplo}
+Se $f(u, v)=\left(u^2, v^2, u v\right)$,
+$$
+J f_{(u, v)}=\left(\begin{array}{cc}
+2 u & 0 \\
+0 & 2 v \\
+v & u
+\end{array}\right), \quad \text { so for example } \quad J f_{(1,2)}=\left(\begin{array}{cc}
+2 & 0 \\
+0 & 4 \\
+2 & 1
+\end{array}\right)
+$$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Superfície Parametrizada
+Regular}
+
+\textbf{Definição:} É uma aplicação $X : U \subset \mathbb{R}^2 \rightarrow \mathbb{R}^3$, com $U$ aberto de $\mathbb{R}^2$, tal que:
+\begin{enumerate}
+\item $X$ é diferenciável de classe $C^\infty$;
+\item Para todo $q(u, v) \in U$, $dX_q : \mathbb{R}^2 \rightarrow \mathbb{R}^3$ é injetora.
+\end{enumerate}
+
+Obs: O item (2) da definição garante a existência de plano tangente $T_qS$ para todos os pontos $q = (u, v) \in U \subset R^2$. Temos que as superfícies parametrizadas regulares admitem auto-intersecção, isto é, não exigem a unicidade do plano tangente em cada ponto; o que não é o caso das superfícies regulares.\\
+
+ \section*{Superfície Regular} 
+ 
+ \cite{do2016differential} \textbf{Definição:} Um subconjunto $S \subset \mathbb{R}^3$ é uma superfície regular se, para cada $p \in S$, existe uma vizinhança $V$ em $\mathbb{R}^3$ e um mapa $x: U \rightarrow V \cap S$ de um conjunto aberto $U \subset \mathbb{R}^2$ em $V \cap S \subset \mathbb{R}^3$ tal que:
+
+\begin{enumerate}
+
+\item  $\forall p \in S$, $\exists V \subseteq \mathbb{R}^3$ vizinhança de $p$ e uma aplicação $X: U \rightarrow V \cap S$ diferenciável, ou seja, é possível calcular derivadas parciais e definir vetores tangentes em cada ponto da superfície.
+
+\item  $X$ é um homeomorfismo entre $U$ e $V \cap S$, ou seja, $X$ possui uma inversa $X^{-1}: V \cap S \rightarrow U$ que é contínua.
+    
+    
+\item Para todo $p \in \mathbb{R}^2$, $dX_q$ é injetiva $\Leftrightarrow$ $dX_q$ tem posto 2 $\Leftrightarrow$ $X_u$ e $X_v$ LI $\Leftrightarrow X_u \times X_v \neq 0$
+\end{enumerate}
+Obs: O item (3) da definição garante a unicidade do plano tangente $T_qS$.
+\subsection*{Exemplo 1}
+
+A superfície dada por $X(u, v) = ((2\cos(u) - 1)\cos(u), (2\cos(u) - 1) \sin(u), v)$. È um exemplo de superfície parametrizada regular, mas,  não é superfície regular. 
+
+Temos que, $X$ é diferenciável de classe $C^\infty$ e $\frac{\partial X}{\partial u}(q) \times \frac{\partial X}{\partial v}(q) \neq (0, 0, 0), \forall q \in U$, garantindo a propriedade de injetividade do item 2. Porém, observa-se, que a superfície possue auto intersecção, não garantindo assim a unicidade do plano tangente em cada ponto de uma superfície regular. 
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/autointersecao1.png}
+    \caption{Dois planos tangentes}
+  \end{minipage}
+  \hspace{4mm}
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{img/autointersecao2.png}
+    \caption{Dois planos tangentes}
+  \end{minipage}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection*{Exemplo 2}
+ Mostre que, se $f(u, v)$ é uma função real diferenciável, onde $(u, v) \in U$, aberto de $\mathbb{R}^2$, então a aplicação $X(u, v) = (u, v, f(u, v))$ é uma superfície parametrizada regular, que descreve o gráfico da função f.
+
+Por definição, $$Graf(f) = \{(x,y,z) \in \mathbb{R}^3 | (x,y) \in U \; \text{e} \; z = f(x,y)\}$$
+Então, seja $S = Graf(f)$, a aplicação $X:U \rightarrow S = S \cap \mathbb{R}^3$ dada por $X(u,v) = (u,v,f(u,v))$ é diferenciável pois $f(u,v)$ é uma função real diferenciável, cumprindo o item 1. Além disso, $X$ é uma bijeção e $X^{-1}=\left.\pi\right|_S$ é contínua, onde $\pi: \mathbb{R}^3 \longrightarrow \mathbb{R}^2, \pi(x, y, z)=(x, y)$, é a projeção sobre o plano-xy. Por último, $\mathrm{d} X_{(u, v)}: \mathbb{R}^2 \longrightarrow \mathbb{R}^3$ é injetora para todo $(u, v) \in \mathrm{U}$, pois
+$$
+\frac{\partial(x, y)}{\partial(u, v)}(u, v)=\left|\begin{array}{ll}
+1 & 0 \\
+0 & 1
+\end{array}\right| \neq 0 .
+$$
+cumprindo o item 3. Logo, $S=\operatorname{Graf}(f)$ é uma superfície regular.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Superfície de Revolução}
+\cite{de2016introduccao} \textbf{Definição:} Geometricamente, uma superfície de revolução $S$ é obtida pela rotação de uma curva regular $C$ em torno de uma reta $l$, em que $C$ e $l$ são disjuntas e contidas em um plano $\Pi \subset \mathbb{R}^3$. A curva $C$ é chamada de \textbf{geratriz} de $S$.
+
+A parametrização geral de uma superfície de revolução é dada por:
+$$
+X(u, v) = (f(v) \cos u, f(v) \sin u, g(v))
+$$
+onde \(u\) é o ângulo de rotação em torno do eixo, \(v\) é o parâmetro ao longo da curva geratriz, e \((f(v), g(v))\) são as coordenadas da curva geratriz.
+
+Para $u$ fixo temos os chamados meridianos de $S$. \\
+Para $v$ fixo temos os chamados paralelos de $S$, que são círculos, por construção.
+
+\subsection*{Exemplo}
+
+Podemos pegar como exemplo a superfície de revolução: $X(u, v) = ((3 - \sin(\pi v))\cdot \cos u, (3 - \sin(\pi v))\cdot \sin u, v)$, onde $f(v) = 3 - \sin(\pi v)$ e $g(v) = v$.
+
+\begin{lstlisting}[language=Python]
+# Superficie de Revolucao: 
+# X(u, v) = (f(v) \cos u, f(v) \sin u, g(v)) = (x, y, z) \in V
+
+# ponto q = (u0, v0)
+u0 = 0 
+v0 = 1.5
+
+f(v) = 3 - sin(pi*v)
+g(v) = v
+
+# Revolucao entorno do eixo z
+X(u, v) = (f(v)*cos(u), f(v)*sin(u), g(v))
+superficie_X = parametric_plot3d(X, (v, 0,3.5), (u,0,2*pi), color='lavenderblush', opacity=0.3, frame=False)
+
+meridianos = parametric_plot3d(X.subs(u=u0), (v,0,3.5), color = "blue", thickness = 3) #  u fixo
+paralelos = parametric_plot3d(X.subs(v=v0), (u,0,2*pi), color = "black", thickness = 3) # v fixo
+
+eixox = arrow3d((0, 0, 0), (4, 0, 0), color='black')  # Eixo x
+eixoy = arrow3d((0, 0, 0), (0, 4, 0), color='black')  # Eixo y
+eixoz = arrow3d((0, 0, 0), (0, 0, 4), color='black')  # Eixo z
+eixos = eixox + eixoy + eixoz
+show(superficie_X +  paralelos + meridianos + eixos)
+    
+\end{lstlisting}
+
+\begin{figure}[H]
+  \centering
+  \begin{minipage}[b]{0.4\textwidth}
+    \includegraphics[width = \textwidth]{img/sup_revolucao_eixo.png}
+    \caption{Superfície de Revolução, em azul temos a curva geratriz em torno do eixo z, e em preto temos o  paralelo para v = v0. }
+  \end{minipage}
+  \hspace{5mm}
+  \begin{minipage}[b]{0.4\textwidth}
+    \animategraphics[autoplay,loop,width=\textwidth]{5}{gif/revolucao-}{0}{35}
+    \caption{Animação da Curva Geratriz} 
+  \end{minipage}
+\end{figure}
+
+\section*{Superfície Regrada}
+Geometricamente, uma superfície regrada $S$ é qualquer superfície gerada por uma reta $\ell$ que se desloca, possivelmente variando de direção, ao longo de uma curva regular $C$. Supondo-se que $\alpha: I \rightarrow \mathbb{R}^3$ seja uma parametrização de $C$, e que $w(s) \in \mathbb{R}^3$ seja a direção de $\ell$ em $s \in I$, tem-se que $S$ é a imagem da aplicação
+$$
+X(s, t)=\alpha(s)+t w(s),(s, t) \in I \times \mathbb{R} .
+$$
+Nesse caso, dizemos que $w: I \rightarrow \mathbb{R}^3$ é uma curva direcional de $S$. A superfície $S$, então, será regular se, e somente se, $X$ for um difeomorfismo do aberto $I \times \mathbb{R} \subset \mathbb{R}^2$ sobre $S$.
+
+As retas $L_t(v)=\alpha(t)+v w(t)$ e a curva $\alpha(t)$ são, respectivamente, as geratrizes e uma diretriz da superfície $X$. Os pontos $\left(t_0, v_0\right) \in I \times J$ tais que $X_t\left(t_0, v_0\right) \wedge X_v\left(t_0, v_0\right)=\overrightarrow{0}$, são chamados pontos singulares da superfície regrada.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.3\textwidth]{img/regrada.png}
+  \caption{Hiperboloide de uma Folha}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section*{Cartas e Atlas}
 \textbf{Definição:} Um atlas é uma coleção de mapas locais que cobrem toda a superfície.
 
 Cada carta consiste em uma região aberta na superfície, chamada de domínio, e uma função diferenciável que associa pontos no domínio a coordenadas no plano $\mathbb{R}^2$. Essas funções permitem a parametrização local da superfície em termos das coordenadas do plano, o que facilita o estudo das propriedades geométricas da superfície.
-\subsection*{Exemplo: Atlas de Esfera}
-
+\subsection*{Exemplo: Esfera}
 Figura 5: Atlas = $\{X_1, X_2\}$, tal que: $X_1(u,v) = (u,-\sqrt{1-(u^2+v^2)})$ e $X_2(u,v) = (u,\sqrt{1-(u^2+v^2)})$\\
 Figura 6: Atlas = $\{X_3, X_4\}$, tal que: $X_3(u,v) = (u,v,-\sqrt{1-(u^2+v^2)})$ e $X_4(u,v) = (u,v,\sqrt{1-(u^2+v^2)})$
 \begin{figure}[H]
   \centering
-  \begin{minipage}[b]{0.4\textwidth}
+  \begin{minipage}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{img/atlas_um.png}
     \caption{Cartas $X_1$ e $X_2$}
   \end{minipage}
   \hspace{4mm}
-  \begin{minipage}[b]{0.4\textwidth}
+  \begin{minipage}[b]{0.3\textwidth}
     \includegraphics[width=\textwidth]{img/atlas_dois.png}
     \caption{Cartas $X_3$ e $X_4$}
   \end{minipage}
 \end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Mudança de Parâmetro}
 \cite{do2016differential} \textbf{Definição:} Se $X$ e $Y$ são parametrizações dadas por:
@@ -214,13 +286,69 @@ s =(u, v), \quad t=t(u, v), \quad(u, v) \in X^{-1}(W),
 $$
 onde as funções $s$ e $t$ também têm derivadas parciais de todas as ordens.
 
-\subsection*{Exemplo}
+\section*{Vetor Normal Unitário}
+Seja $X_u(u,v)$ e $X_v(u,v)$ as derivadas parciais de uma parametrização $X$, consideramos o vetor normal unitário em um ponto $X(u,v)$:
+$$n(u,v) = \frac{X_u(u,v) \cdot X_v(u,v)}{||X_u(u,v) \cdot X_v(u,v)||}$$
+\subsubsection*{Função em Sagemath}
+\begin{lstlisting}[language=Python]
+def obter_normal_unitario(X, u, v):
+    x_u = diff(X, u)
+    x_v = diff(X, v)
+    
+    normal = x_u.cross_product(x_v)   
+    n = normal / normal.norm()
+    n = n.apply_map(lambda x: x.simplify_full().canonicalize_radical())
+    
+    return n
+\end{lstlisting}
 
+\section*{Aplicação Normal de Gauss}
 
-\section*{Vetor Tangente e Plano Tangente}
-\textbf{Definição:} 
+Seja $S \subset \mathbb{R}^3$ uma superfície regular orientável e $N$ um campo normal unitário diferenciável em $S$, isto é, $|N(p)| = 1$ para todo $p \in S$, ou seja, $N$ toma valores na esfera unitária centrada na origem $S^2$. 
+Nessas condições, $N: S \rightarrow S^2$ é chamada de \textbf{aplicação normal de Gauss} de $S$. 
 
+Em outras palavras, a aplicação normal de Gauss, também conhecida como mapa de Gauss, associa a cada ponto de uma superfície uma unidade normal nesse ponto. Em uma superfície parametrizada, o mapa de Gauss é uma função que toma um ponto $(u, v)$ e retorna o vetor normal unitário nesse ponto. Então, a função \textit{obter\_normal\_unitário} também pode obter a função que faz esse mapeamento. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Plano Tangente}
+\cite{do2016differential} \textbf{Definição:} Seja $X: \mathrm{U} \subset \mathrm{R}^2 \rightarrow \mathrm{S}$ uma parametrização de uma superfície regular $\mathrm{S}$ e seja $\mathrm{q} \in \mathrm{U}$. O subespaço vetorial de dimensão 2, $\mathrm{d} X_{\mathrm{q}}\left(\mathrm{R}^2\right) \subset \mathrm{R}^3$, coincide com o conjunto dos vetores tangentes a $\mathrm{S}$ em $\mathbf{x}(\mathrm{q})$. O plano $\mathrm{d} X_{\mathrm{\mathbb{R}^2}}$, que passa por $x(q) = p$, não depende de $X$. Esse plano será chamado de \textbf{plano tangente à S em p} e será chamado de $T_pS$.
+
+Para plotar o plano tangente, precisamos de um ponto e de um vetor normal ao plano. 
+
+\begin{itemize}
+    \item O ponto é o ponto da superfície que queremos plotar o plano tangente. 
+    \item O vetor normal $n_p$ é o vetor normal à superfície no ponto $p$.
+\end{itemize}
+A equação do plano tangente ao ponto $p = (u_0,v_0)$ da superfície paramétrica X é:
+
+$$n_p[0]*(x-x_0) + n_p[1]*(y-y_0) + n_p[2]*(z - z_0) = 0$$
+
+\subsubsection*{Exemplo Epar}
+$X(u,v) = (u, v, 2u^2 + \frac{2}{9}v^2), u,v \in [-1,1]$.
+
+\begin{lstlisting}
+    X(u,v) = (u, v, 2*u^2 + 2/9*v^2)
+    # Definindo o ponto p = (u0,v0)
+    u0, v0 = 0, 0
+    # Vetor Unitario Normal
+    normal = obter_normal_unitario(X, u, v)
+    np = normal.subs(u=u0, v=v0)
+
+    x0 = X[0].subs(u=u0, v=v0)
+    y0 = X[1].subs(u=u0, v=v0)
+    z0 = X[2].subs(u=u0, v=v0)
+
+    superficie_X = parametric_plot3d(X, (u,-1,1), (v,-1,1), color='blue')
+    # Equacao do Plano Tangente
+    Plano_Tangente(x,y,z) = np[0]*(x-x0) + np[1]*(y-y0) + np[2]*(z - z0) == 0
+    plano_tangente_X = implicit_plot3d(Plano_Tangente,(x,-2,2), (y,-2,2), (z,-2,2), color='aquamarine', opacity=0.5)
+    show(superficie_X + plano_tangente_X, frame=False)
+\end{lstlisting}
+\begin{figure}[H]
+  \centering    \includegraphics[width=0.3\textwidth]{img/epar_tangent.png}
+    \caption{$T_pS$ de Epar ao ponto $p = (u_0,v_0)$ }
+\end{figure}
 \subsection*{Equações Implícitas} Seja $z=f(x, y)$ a equação de uma superfície $S$ em $\mathbb{R}^3$, se $\frac{\partial f}{\partial x}$ e $\frac{\partial f}{\partial y}$ existem em uma região em torno de um ponto $(a, b)$ e são contínuas em $(a, b)$, então o plano tangente à superfície $z=f(x, y)$ existirá no ponto $(a, b, f(a, b))$. 
 
 Suponha que queremos uma equação do plano tangente $T$ à superfície $z=f(x, y)$ em um ponto $(a, b, f(a, b))$. Sejam $L_x$ e $L_y$ as linhas tangentes às traços da superfície nos planos $y=b$ e $x=a$: 
@@ -240,6 +368,23 @@ $$\frac{\partial f}{\partial x}(a, b)(x-a)+\frac{\partial f}{\partial y}(a, b)(y
 $$
 z = L_x(a,b) (x-a) + L_y(a,b) (y-b) + f(a,b)
 $$
+\begin{lstlisting}
+    f(x,y) = x^2 - y^2
+    # Definindo o ponto p = (x0,y0, f(x0,y0))
+    x0, y0 = 0, 0
+    z0 = f(x0,y0)
+
+    Lx = diff(f,x).subs(x=x0, y=y0)
+    Ly = diff(f,y).subs(x=x0, y=y0)    
+    # Plot do Plano Tangente
+    plano_tangente = plot3d(Lx*(x-x0) + Ly*(y-y0) + z0, (x,-5,5), (y,-5,5), color='aquamarine', opacity=0.5) 
+    superficie = plot3d(f, (x,-5,5), (y,-5,5), color='blue')
+    show(superficie + plano_tangente, frame=False)
+\end{lstlisting}
+\begin{figure}[H]
+  \centering    \includegraphics[width=0.3\textwidth]{img/tangent2.png}
+    \caption{Plano Tangente de $f(x,y)$ em $p = (0,0)$}
+\end{figure}
 \section*{Curvas Coordenadas}
 Dada uma parametrização $X(u,v)$:
 $$X:U \subset \mathbb{R}^2 \rightarrow X(U) \subset S$$
@@ -299,18 +444,18 @@ $$G = X_v(u,v) \cdot X_v(u,v)$$
 Através dela, encontramos a matriz $I_{X(u,v)}$ com respeito a base $\{X_u(u,v), X_v(u,v)\}$ de $T_{X(u,v)}S$  
 $$
 \begin{bmatrix}
-E(u,v) & F(u,v)\\
-F(u,v) & G(u,v)
+	E(u,v) & F(u,v)\\
+	F(u,v) & G(u,v)
 \end{bmatrix}$$
 E daí,
 $$\begin{bmatrix}
-a & b
+	a & b
 \end{bmatrix}\begin{bmatrix}
-E & F\\
-F & G
+	E & F\\
+	F & G
 \end{bmatrix} \begin{bmatrix}
-a \\
-b
+	a \\
+	b
 \end{bmatrix}$$
 $$I_{X(u,v)}(w) = a^2 E(u,v) + 2ab F(u,v) + b^2 G(u,v)$$
 
@@ -320,27 +465,27 @@ Que é uma superfície de revolução com $f(v) = R + r \cos v$ e $g(v) = r \sin
 
 Os coeficientes da primeira forma fundamental desta parametrização são 
 \begin{align*}
-E(u, v) &= (R + r \cos v)^2, \\
-F(u, v) &= 0, \\
-G(u, v) &= (-r \sin v)^2 + (r \cos v)^2 = r^2.
+	E(u, v) &= (R + r \cos v)^2, \\
+	F(u, v) &= 0, \\
+	G(u, v) &= (-r \sin v)^2 + (r \cos v)^2 = r^2.
 \end{align*}
 
 \subsubsection*{Função em Sagemath}
 \begin{lstlisting}
-def obter_coef_primeira_forma(X, u, v):
-    x_u = diff(X, u)
-    x_v = diff(X, v)
-    
-    # Primeira Forma Fundamental
-    E = x_u.dot_product(x_u)
-    F = x_u.dot_product(x_v)
-    G = x_v.dot_product(x_v)
-    
-    E = E.full_simplify().canonicalize_radical()
-    F = F.full_simplify().canonicalize_radical()
-    G = G.full_simplify().canonicalize_radical()
-    
-    return E,F,G    
+	def coef_primeira_forma(X, u, v):
+	x_u = diff(X, u)
+	x_v = diff(X, v)
+	
+	# Primeira Forma Fundamental
+	E = x_u.dot_product(x_u)
+	F = x_u.dot_product(x_v)
+	G = x_v.dot_product(x_v)
+	
+	E = E.full_simplify().canonicalize_radical()
+	F = F.full_simplify().canonicalize_radical()
+	G = G.full_simplify().canonicalize_radical()
+	
+	return E,F,G    
 \end{lstlisting}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Área de Superfície}
@@ -351,50 +496,27 @@ $$A = \int_{X^{-1}(R)} \sqrt{E \cdot G - F^2} du \; dv$$
 \subsection*{Exemplo: Área do Toro}
 Continuando o exemplo anterior, temos que:
 \begin{align*}
-E(u, v) &= (R + r \cos v)^2, \\
-F(u, v) &= 0, \\
-G(u, v) &= (-r \sin v)^2 + (r \cos v)^2 = r^2.
+	E(u, v) &= (R + r \cos v)^2, \\
+	F(u, v) &= 0, \\
+	G(u, v) &= (-r \sin v)^2 + (r \cos v)^2 = r^2.
 \end{align*}
 
 $\sqrt{EG - F^2} = \sqrt{r(R + r \cos v)}$ , e a área do toro é
 \begin{align*}
-A = \int_{0}^{2\pi} \int_{0}^{2\pi} (R + r \cos v) \, du \, dv \\
-= 2\pi r \int_{0}^{2\pi} (R + r \cos v) \, dv \\
-= 2\pi r \left[Rv + r \sin v\right]_{v=0}^{v=2\pi} \\
-= 4\pi^2 rR.
+	A = \int_{0}^{2\pi} \int_{0}^{2\pi} (R + r \cos v) \, du \, dv \\
+	= 2\pi r \int_{0}^{2\pi} (R + r \cos v) \, dv \\
+	= 2\pi r \left[Rv + r \sin v\right]_{v=0}^{v=2\pi} \\
+	= 4\pi^2 rR.
 \end{align*}
-% \url{http://150.164.25.15/~rodney/notas_de_aula/geometria_diferencial.pdf}
 \subsubsection*{Função em Sagemath}
-\begin{lstlisting}
-def calcular_area(X, u, v, Intervalo_u, Intervalo_v):
-    E, F, G = obter_coef_primeira_forma(X, u, v)
-    A = integrate(integrate(sqrt(E * G - F^2), u, Intervalo_u[0], Intervalo_u[1]), v, Intervalo_v[0], Intervalo_v[1])
-    
-    return A.full_simplify()
+\begin{lstlisting}[language=Python]
+	def calcular_area(X, u, v, Intervalo_u, Intervalo_v):
+	E, F, G = obter_coef_primeira_forma(X, u, v)
+	A = integrate(integrate(sqrt(E * G - F^2), u, Intervalo_u[0], Intervalo_u[1]), v, Intervalo_v[0], Intervalo_v[1])
+	
+	return A.full_simplify()
 \end{lstlisting}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Vetor Unitário}
-Seja $X_u(u,v)$ e $X_v(u,v)$ as derivadas parciais de uma parametrização $X$, consideramos o vetor normal unitário em um ponto $X(u,v)$:
-$$n(u,v) = \frac{X_u(u,v) \cdot X_v(u,v)}{||X_u(u,v) \cdot X_v(u,v)||}$$
-\subsubsection*{Função em Sagemath}
-\begin{lstlisting}
-def obter_normal_unitario(X, u, v):
-    x_u = diff(X, u)
-    x_v = diff(X, v)
-    
-    normal = x_u.cross_product(x_v)   
-    n = normal / normal.norm()
-    n = n.apply_map(lambda x: x.simplify_full().canonicalize_radical())
-    
-    return n
-\end{lstlisting}
-\section*{Aplicação Normal de Gauss}
-
-Seja $S \subset \mathbb{R}^3$ uma superfície regular orientável e $N$ um campo normal unitário diferenciável em $S$, isto é, $|N(p)| = 1$ para todo $p \in S$, ou seja, $N$ toma valores na esfera unitária centrada na origem $S^2$. 
-Nessas condições, $N: S \rightarrow S^2$ é chamada de \textbf{aplicação normal de Gauss} de $S$. 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \section*{Segunda Forma Fundamental}
@@ -423,49 +545,106 @@ $$N = n(u,v) \cdot X_{vv}(u,v)$$
 
 Assim como na Primeira Forma, encontramos a matriz $II_{X(u,v)}$ de $T_{X(u,v)}S$  
 $$\begin{bmatrix}
-L(u,v) & M(u,v)\\
-M(u,v) & N(u,v)
+	L(u,v) & M(u,v)\\
+	M(u,v) & N(u,v)
 \end{bmatrix}$$
 
 E daí,
 $$\begin{bmatrix}
-a & b
+	a & b
 \end{bmatrix} \begin{bmatrix}
-L & M\\
-M & N
+	L & M\\
+	M & N
 \end{bmatrix} \begin{bmatrix}
-a \\
-b
+	a \\
+	b
 \end{bmatrix}$$
 $$II_{X(u,v)}(w) = a^2 L(u,v) + 2ab M(u,v) + b^2 N(u,v)$$
 
-\subsection*{Exemplo:}
+\subsection*{Exemplo:  Segunda Forma Fundamental da Sela de Macaco} 
+
+A Sela de Macaco é uma superfície dada por: $X(u, v) = (u, v, u^3-3uv^2), (u, v) \in \mathbb{R}^2$.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.3\textwidth]{img/sela_macaco.png}
+	\caption{Sela de Macaco}
+	\label{fig:enter-label}
+\end{figure}
+
+Primeiramente vamos calcular os coeficientes da primeira forma fundamental $E$, $F$, e $G$.
+\begin{align*}
+	X_u &= (1, 0, 3u^2 - 3v^2)\\
+	X_v &= (0, 1, -6vu)\\
+	X_{uu} &= (0, 0, 6u)\\
+	X_{vv} &= (0, 0, -6u)\\
+	X_{uv} &= (0, 0, -6v)
+\end{align*}
+Logo,
+
+$$E = \langle X_u, X_u \rangle = 1 + (3u^2 - 3v^2)^2,$$
+$$F = \langle X_u, X_v \rangle = -6vu(3u^2 - 3v^2),$$ 
+$$ G = \langle X_v, X_v \rangle = 1 + 36v^2u^2.$$
+
+Então,
+$$
+\sqrt{EG - F^2} = \sqrt{1 + 9u^4 + 18u^2v^2 + 9v^4}.
+$$
+
+Agora vamos calcular os coeficientes da segunda forma fundamental \cite{ref_bruna}:
+
+\[
+\text{det}(X_u, X_v, X_{uu}) = \begin{vmatrix} 1 & 0 & 3u^2 - 3v^2 \\ 0 & 1 & -6vu \\ 0 & 0 & 6u \end{vmatrix} = 6u,
+\]
+
+\[
+\text{det}(X_u, X_v, X_{uv}) = \begin{vmatrix} 1 & 0 & 3u^2 - 3v^2 \\ 0 & 1 & -6vu \\ 0 & 0 & -6v \end{vmatrix} = -6v,
+\]
+
+\[
+\text{det}(X_u, X_v, X_{vv}) = \begin{vmatrix} 1 & 0 & 3u^2 - 3v^2 \\ 0 & 1 & -6vu \\ 0 & 0 & -6u \end{vmatrix} = -6u.
+\]
+
+Logo,
+\[
+L = \frac{\text{det}(X_u, X_v, X_{uu})}{\sqrt{EG - F^2}} = \frac{6u}{\sqrt{1 + 9u^4 + 18u^2v^2 + 9v^4}},
+\]
+
+\[
+M = \frac{\text{det}(X_u, X_v, X_{uv})}{\sqrt{EG - F^2}} = \frac{-6v}{\sqrt{1 + 9u^4 + 18u^2v^2 + 9v^4}},
+\]
+
+\[
+N = \frac{\text{det}(X_u, X_v, X_{vv})}{\sqrt{EG - F^2}} = \frac{-6u}{\sqrt{1 + 9u^4 + 18u^2v^2 + 9v^4}}.
+\]
+
 
 \subsubsection*{Função em Sagemath}
 \begin{lstlisting}
-def coef_segunda_forma(X, u,v):
-    # Derivadas de Primeira e Segunda Ordem
-    x_u = derivative(X, u)
-    x_v = derivative(X, v)
-    
-    x_uu = derivative(x_u, u)
-    x_uv = derivative(x_u, v)
-    x_vv = derivative(x_v, v)
-    
-    # Vetor Normal Unitario a Superficie
-    vetor_N = obter_normal_unitario(X, u, v)
-    
-    # Segunda Forma Fundamental
-    L = vetor_N.dot_product(x_uu)
-    M = vetor_N.dot_product(x_uv)
-    N = vetor_N.dot_product(x_vv)
-    
-    L = L.full_simplify().canonicalize_radical()
-    M = M.full_simplify().canonicalize_radical()
-    N = N.full_simplify().canonicalize_radical()
-    
-    return L, M, N 
+	def coef_segunda_forma(X, u,v):
+	# Derivadas de Primeira e Segunda Ordem
+	x_u = derivative(X, u)
+	x_v = derivative(X, v)
+	
+	x_uu = derivative(x_u, u)
+	x_uv = derivative(x_u, v)
+	x_vv = derivative(x_v, v)
+	
+	# Vetor Normal Unitario a Superficie
+	vetor_N = obter_normal_unitario(X, u, v)
+	
+	# Segunda Forma Fundamental
+	L = vetor_N.dot_product(x_uu)
+	M = vetor_N.dot_product(x_uv)
+	N = vetor_N.dot_product(x_vv)
+	
+	L = L.full_simplify().canonicalize_radical()
+	M = M.full_simplify().canonicalize_radical()
+	N = N.full_simplify().canonicalize_radical()
+	
+	return L, M, N 
 \end{lstlisting}
+
 \section*{Aplicações Lineares Auto-Adjuntas e Formas Quadráticas}
 \textbf{Definição:} Um operador linear $A: V \rightarrow V$ é auto-adjunto se:
 $$<Av, w> \; = \; <v, Aw> \quad \forall \; v,w \in V$$
@@ -475,9 +654,49 @@ $$<Av, w> \; = \; <v, Aw> \quad \forall \; v,w \in V$$
 
 $$A \; \text{simétrica} \leftrightarrow A \; \text{auto-adjunta}$$
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section*{Curvatura de Superfícies}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section*{Matriz Forma}
+A matriz $M$ é representada por:
+
+$$M= \mathcal{F}_I^{-1} \mathcal{F}_{I I}$$
+Onde $M$ é matriz de $-d N_{X(u, v)}$ com respeito à base $\left\{X_u, X_v\right\}$.
+$$M = \left(\begin{array}{ll}
+E & F \\
+F & G
+\end{array}\right)^{-1}\left(\begin{array}{cc}
+L & M \\
+M & N
+\end{array}\right)=\frac{1}{E G-F^2}\left[\begin{array}{ll}
+L G - M F & M G - N F \\
+M E- L F & N E- M F
+\end{array}\right]$$
+
+E com álgebra simples chega-se à expressão das curvaturas Gaussiana (K) e Média (H) utilizando apenas os coeficientes das formas fundamentais:
+\begin{itemize}
+  \item  $K \circ X=\operatorname{det}(M)=\frac{e g-f^2}{E G-F^2}$
+  \item  $H \circ X=\frac{1}{2} \operatorname{trao}(M)=\frac{1}{2} \frac{e G-2 f F+E g}{E G-F^2}$
+\end{itemize}
+
+\begin{lstlisting}
+ def obter_matriz_forma(carta, u, v):
+    # Formas Fundamentais
+    E, F, G = coef_primeira_forma(carta, u, v)
+    L, M, N = coef_segunda_forma(carta, u, v)
+
+    termo_norm = E*G - F^2
+    
+    # Equacoes de Weingarten
+    a = (( L*G - M*F ) / termo_norm).full_simplify().canonicalize_radical()
+    b = (( M*E - L*F ) / termo_norm).full_simplify().canonicalize_radical()
+    c = (( M*G - N*F ) / termo_norm).full_simplify().canonicalize_radical()
+    d = (( N*E - M*F ) / termo_norm).full_simplify().canonicalize_radical()
+
+    matriz_forma = Matrix([ [a, c], [b, d] ])   
+    return matriz_forma   
+\end{lstlisting}
+
+\section*{Curvatura de Superfícies}
 Seja $S$ uma superfície regular orientável com orientação $N$. Vimos que $-dN_p$ é diagonalizável, ou seja, existem uma base ortonormal ${w_1, w_2}$ associada aos autovalores $k_1$ e $k_2$, ou seja:
 $-dN_pw_1 = k_1w_1$ e $-dN_pw_2 = k_2w_2$.
 
@@ -486,24 +705,32 @@ Definimos então:
 \subsection*{Curvaturas Principais}
 
 O máximo e o mínimo da curvatura normal em um determinado ponto $p$ em uma superfície são chamados de curvaturas principais $\mathbf{k}_1(p)$ e  $\mathbf{k}_2(p)$, respectivamente.
- 
+
 Se $k_1(p) = k_2(p) = 0$, $p$ é um ponto planar;\\
 Se $k_1(p) = k_2(p)$, $p$ é um ponto umbílico.
 
 Obs: (Dado um ponto p em uma superfície, as curvaturas principais $k_1(p)$ e $k_2(p)$ são determinadas pelos autovalores da matriz da segundo forma fundamental no ponto $p$)
 \subsubsection*{Função em Sagemath}
 \begin{lstlisting}
-def curvaturas_principais(X, u, v):
-    dNp = matriz_forma(X, u, v)
-    k1, k2 = dNp.eigenvalues()
-    
-    return k1, k2
+	def curvaturas_principais(X, u, v):
+	dNp = matriz_forma(X, u, v)
+	k1, k2 = dNp.eigenvalues()
+	
+	return k1, k2
 \end{lstlisting}
 
-\subsection*{Direções principais}
+\subsection*{Direções Principais}
 
 As direções principais  $\mathbf{w}_1(p)$ e $\mathbf{w}_2(p)$ são os autovetores  associados aos autovalores $k_1(p)$ e $k_2(p)$, respectivamente, da matriz $-dN_p$.
 No ponto $p$ da superfície $S$, o vetor $w_1(p)$ aponta na direção de máxima curvatura, enquanto $w_2(p)$ aponta na direção de mínima curvatura.
+
+\subsubsection*{Função em Sagemath}
+\begin{lstlisting}
+	def obter_direcoes_principais(carta, u, v):
+	matriz_forma = obter_matriz_forma(carta, u, v)
+	w_1, w_2 = matriz_forma.eigenvectors_right()
+	return vector(w_1[1][0]), vector(w_2[1][0])
+\end{lstlisting}
 
 \subsection*{Curvatura de Gauss}
 A curvatura de Gauss é uma medida da curvatura intrínseca de uma superfície em um determinado ponto. E pode ser representada pela determinante da matriz $-dN_p$, ou por: 
@@ -515,13 +742,13 @@ Se $K(p) = 0$ (com $-dN_p \neq 0$), $p$ é um ponto parabólico.\\
 
 \subsubsection*{Função em Sagemath}
 \begin{lstlisting}
-def curvatura_gauss(X, u, v):
-    dNp = matriz_forma(X, u, v)
-    curv_gauss = dNp.determinant().full_simplify()
-    # k1, k2 = curvaturas_principais(X,u,v)
-    # curv_gauss = k1.dot_product(k2)
-    
-    return curv_gauss
+	def curvatura_gauss(X, u, v):
+	dNp = matriz_forma(X, u, v)
+	curv_gauss = dNp.determinant().full_simplify()
+	# k1, k2 = curvaturas_principais(X,u,v)
+	# curv_gauss = k1.dot_product(k2)
+	
+	return curv_gauss
 \end{lstlisting}
 \subsection*{Curvatura Média}
 
@@ -530,14 +757,13 @@ A curvatura média de $S$ em $p$ é definida como sendo:
 $$\mathbf{H(p) = \frac{1}{2} \operatorname{tr}(-dN_p) = \frac{k_1(p) + k_2(p)}{2}}$$
 
 \subsubsection*{Função em Sagemath}
-\begin{lstlisting}
-def curvatura_media(X, u, v):
-    k1, k2 = curvaturas_principais(X, u, v)
-    curv_media = (k1 + k2) / 2
-    
-    return curv_media
+\begin{lstlisting}[language=Python]
+	def curvatura_media(X, u, v):
+	k1, k2 = curvaturas_principais(X, u, v)
+	curv_media = (k1 + k2) / 2
+	
+	return curv_media
 \end{lstlisting}
-
 
 \section*{Bônus: Transição entre Superfícies}
 Para criar uma transição suave entre duas superfícies no Sagemath, existem alguns métodos. Seja $X = (x_1,x_2,x_3)$ e $Y = (y_1,y_2,y_3)$ as parametrizações das superfícies, podemos criar a parametrização de transição $T$ sendo:
@@ -545,35 +771,32 @@ $$T = (cos(a)*x_1 + sin(a)*y_1, \; cos(a)*x_2 + sin(a)y_2, \; cos(a)*x_3 + sin(a
 
 Daí, quando $a = 0$, teremos a superfície Y e quando $a = 2\pi$ (ou $-2\pi$), teremos a superfície X. Então basta aplicar a função $animate()$ com $a$ variando entre 0 e $2\pi$.
 
-Créditos: Pedro García
+Créditos: Pedro Garcia
 
 \begin{lstlisting}
-a,u,v,z  = var('a u v z')
-
-# Helicoide
-Helicoid = ((sinh(u)*cos(v), sinh(u)*sin(v), v))
-# Catenoide
-Catenoide = ((-cosh(u)*sin(v), cosh(u)*cos(v), u))
-# Transicao
-X(u,v) = (cos(a)*Helicoid[0] + sin(a)*Catenoid[0], cos(a)*Helicoid[1] + sin(a)*Catenoid[1], cos(a)*Helicoid[2] + sin(a)*Catenoid[2])
-
-figura = parametric_plot3d(X.subs(a=i), (u, -4,4), (v, -4, 4)) for i in sxrange(-2*pi, 0,0.3)
-animacao = animate(figura)
-show(animacao)
+	a,u,v,z  = var('a u v z')
+	# Helicoide
+	Helicoid = ((sinh(u)*cos(v), sinh(u)*sin(v), v))
+	# Catenoide
+	Catenoide = ((-cosh(u)*sin(v), cosh(u)*cos(v), u))
+	# Transicao
+	X(u,v) = (cos(a)*Helicoid[0] + sin(a)*Catenoid[0], cos(a)*Helicoid[1] + sin(a)*Catenoid[1], cos(a)*Helicoid[2] + sin(a)*Catenoid[2])
+	figura = parametric_plot3d(X.subs(a=i), (u, -4,4), (v, -4, 4)) for i in sxrange(-2*pi, 0,0.3)
+	animacao = animate(figura)
+	show(animacao)
 \end{lstlisting}
 \begin{figure}[H]
-  \centering
-  \begin{minipage}[b]{0.4\textwidth}
-    \animategraphics[autoplay,loop,width=5cm]{4}{gif/transicao_catenoide-}{0}{21}
-    \caption{Transição suave entre Helicoide e Catenoide} 
-  \end{minipage}
-  \hspace{5mm}
-  \begin{minipage}[b]{0.4\textwidth}
-    \animategraphics[autoplay,loop,width=5cm]{4}{gif/transicao_hiperboloide-}{0}{26}
-    \caption{Transição suave entre Helicoide e Hiperboloide} 
-  \end{minipage}
+	\centering
+	\begin{minipage}[b]{0.4\textwidth}
+		\animategraphics[autoplay,loop,width=5cm]{7}{gif/transicaocatenoide-}{0}{21}
+		\caption{Transição 1 suave entre Helicoide e Catenoide} 
+	\end{minipage}
+	\hspace{5mm}
+	\begin{minipage}[b]{0.4\textwidth}
+		\animategraphics[autoplay,loop,width=5cm]{5}{gif/transicaohiperboloide-}{0}{25}
+		\caption{Transição 1 suave entre Helicoide e Hiperboloide} 
+	\end{minipage}
 \end{figure}
-
 Analogamente, há a alternativa de utilizar $(1-a)$ em vez de $cos(a)$ e $a$ em vez de $sen(a)$. 
 
 $$T = ((1-a)*x_1 + a*y_1, \; (1-a)*x_2 + ay_2, \; (1-a)*x_3 + a*y_3)$$
@@ -581,31 +804,58 @@ $$T = ((1-a)*x_1 + a*y_1, \; (1-a)*x_2 + ay_2, \; (1-a)*x_3 + a*y_3)$$
 Daí, quando $a$ = 0, teremos a superfície $X$ e quando $a = 1$, teremos a superfície $Y$. Então basta aplicar a função $animate()$ com $a$ variando entre $0$ e $1$.
 
 \begin{lstlisting}
-# Helicoide
-Helicoid = ((v*cos(u), v*sin(u), u))
-# Hiperboloide de uma folha
-Hiperboloid = ((cos(u) - v*sin(u), sin(u) + v*cos(u), v))
-# Transicao
-X(u,v) = ((1-a)*Helicoid[0] + a*Hiperboloid[0], (1-a)*Helicoid[1] + a*Hiperboloid[1], (1-a)*Helicoid[2] + a*Hiperboloid[2])
-
-figura = parametric_plot3d(X.subs(a=i), (u, -2*pi,0), (v, -2, 2)) for i in sxrange(0, 1,0.1)
-animacao = animate(figura)
-show(animacao)
+	# Helicoide
+	Helicoid = ((v*cos(u), v*sin(u), u))
+	# Hiperboloide de uma folha
+	Hiperboloid = ((cos(u) - v*sin(u), sin(u) + v*cos(u), v))
+	# Transicao
+	X(u,v) = ((1-a)*Helicoid[0] + a*Hiperboloid[0], (1-a)*Helicoid[1] + a*Hiperboloid[1], (1-a)*Helicoid[2] + a*Hiperboloid[2])
+	
+	figura = parametric_plot3d(X.subs(a=i), (u, -2*pi,0), (v, -2, 2)) for i in sxrange(0, 1,0.1)
+	animacao = animate(figura)
+	show(animacao)
 \end{lstlisting}
 \begin{figure}[H]
-  \centering
-  \begin{minipage}[b]{0.4\textwidth}
-    \animategraphics[autoplay,loop,width=5cm]{4}{gif/transicao2_catenoide-}{0}{9}
-    \caption{Transicao suave entre Helicoide e Catenoide} 
-  \end{minipage}
-  \hspace{5mm}
-  \begin{minipage}[b]{0.4\textwidth}
-    \animategraphics[autoplay,loop,width=5cm]{4}{gif/transicao2_hiperboloide-}{0}{10}
-    \caption{Transição suave entre Helicoide e Hiperboloide} 
-  \end{minipage}
+	\centering
+	\begin{minipage}[b]{0.4\textwidth}
+		\animategraphics[autoplay,loop,width=5cm]{5}{gif/transicao2catenoide-}{0}{9}
+		\caption{Transição 2 suave entre Helicoide e Catenoide} 
+	\end{minipage}
+	\hspace{5mm}
+	\begin{minipage}[b]{0.4\textwidth}
+		\animategraphics[autoplay,loop,width=5cm]{5}{gif/transicao2hiperboloide-}{0}{10}
+		\caption{Transição 2 suave entre Helicoide e Hiperboloide} 
+	\end{minipage}
 \end{figure}
 %
+\section*{Bônus: Como inserir Gifs em PDF usando o pacote Animate}
+
+O pacote animate permite incluir animações controladas por JavaScript em um pdf criado com LaTeX. Isso pode ser particularmente útil para apresentações beamer. A maior ressalva antecipada: as animações são suportadas apenas por alguns leitores de pdf (AcrobatReader, PDF-XChange, acroread e Foxit Reader). Leia sobre: https://texblog.org/2018/03/05/the-animate-package/
+
+Passo a Passo:
+
+$\cdot$ Instalar e importar o pacote "animate".\\
+$\cdot$ Gravar sua animação em gif.\\
+$\cdot$ Crie uma pasta para seus frames.\\
+$\cdot$ Converta seu gif para png ou jpg. Existem alguns programas que fazem isso, como o "Magick" que é recomendado na página do pacote animate. Mas também há um site online que o faz muito bem: https://image.online-convert.com/convert/gif-to-png\\
+$\cdot$ Coloque os frames na pasta criada, seus nomes devem ser iguais, apenas com um número final para distingui-los. Por exemplo, chamaremos o primeiro de "frame-1.png", o segundo de "frame-2.png", etc.\\
+$\cdot$ Por último, basta inseri-lo no seu Tex.
+\begin{lstlisting}[language=Python]
+	\animategraphics[options]{frame rate}{file basename}{first}{last}
+\end{lstlisting}
+Exemplo prático:
+\begin{lstlisting}[language=Python]
+	\begin{figure}[H]
+		\centering  
+		\animategraphics[autoplay,loop,width=6cm]{5}{gif/frame-}{0}{20}
+		\caption{"Caption Aqui!"} 
+	\end{figure}
+\end{lstlisting}
+Nesse exemplo, o gif terá 20 frames que estão enumerados de 0 a 20 na pasta "gif". Na visualização teremos 5 frames por segundo. Caso o "frame rate" seja um número menor que 1, teríamos o mesmo frame por mais de um segundo.
+
 \bibliographystyle{plain}
-\bibliography{bibliography.bib}
+\bibliography{bibliografia.bib}
+
+
 
 \end{document}
